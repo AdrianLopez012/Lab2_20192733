@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Bingo - Juego</title>
+    </head>
+    <body>
+        <h1>Juego de Bingo</h1>
+
+        <div th:if="${not(juegoIniciado)}">
+            <button onclick="document.getElementById('startForm').submit()">Iniciar Juego</button>
+        </div>
+
+        <div th:if="${juegoIniciado}">
+            <form action="/marcado" method="post">
+                <label >Ingresar Número:</label>
+                <input type="number"  name="numeroselec" min="1" max="99" required>
+                <button type="submit">Marcar Número</button>
+            </form>
+        </div>
+
+        <h2 th:text="${mensaje}"></h2>
+
+        <div th:each="carta, iterStat : ${listaCartas}">
+            <h3>Tarjeta ${intersat}</h3>
+            <table >
+                <tr th:each="fila, posfila : ${carta.carta}">
+                    <td th:each="numero, poscolumna : ${fila}"
+                        th:text="${numero}"
+                        th:classappend="${carta.marcaBingo[posfila.index][poscolumna.index]} ? 'marked' : ''">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </body>
+</html>
